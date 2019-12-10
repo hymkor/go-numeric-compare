@@ -32,5 +32,6 @@ func TestCompare(t *testing.T) {
 		expect("v100", "v80", +1, t) &&
 		expect("v100", "v120", -1, t) &&
 		expect("v120", "v100", +1, t) &&
-		expect("v100", "v100", 0, t))
+		expect("v100", "v100", 0, t) &&
+		expect("0200", "v100", -1, t))
 }
