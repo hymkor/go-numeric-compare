@@ -63,13 +63,13 @@ func CompareReader(r1, r2 io.RuneScanner) int {
 				if err2 != nil {
 					return +1
 				}
+				continue
 			}
-		} else {
-			if c1 < c2 {
-				return -1
-			} else if c1 > c2 {
-				return +1
-			}
+		}
+		if c1 < c2 {
+			return -1
+		} else if c1 > c2 {
+			return +1
 		}
 	}
 }
