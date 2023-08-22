@@ -1,4 +1,4 @@
-// +build run
+//go:build run
 
 package main
 
@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/zetamatta/go-numeric-compare"
+	"github.com/hymkor/go-numeric-compare"
 )
 
 func test(a, b string) {
