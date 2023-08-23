@@ -35,3 +35,22 @@ func TestCompare(t *testing.T) {
 		expect("v100", "v100", 0, t) &&
 		expect("0200", "v100", -1, t))
 }
+
+func BenchmarkCompare(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Compare("a100", "a2")
+		Compare("a2", "a100")
+		Compare("a2", "a3")
+		Compare("a3", "a2")
+		Compare("a2", "b1")
+		Compare("a", "b")
+		Compare("a001", "a1")
+		Compare("a1", "a0001")
+		Compare("v80", "v100")
+		Compare("v100", "v80")
+		Compare("v100", "v120")
+		Compare("v120", "v100")
+		Compare("v100", "v100")
+		Compare("0200", "v100")
+	}
+}
