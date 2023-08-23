@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-const table = "0123456789"
-
 func readnum(n int, sc io.RuneScanner) (int, int, error) {
 	count := 0
 	for {
@@ -14,12 +12,11 @@ func readnum(n int, sc io.RuneScanner) (int, int, error) {
 		if err != nil {
 			return n, count, err
 		}
-		i := strings.IndexRune(table, c)
-		if i < 0 {
+		if c < '0' || '9' < c {
 			sc.UnreadRune()
 			return n, count, nil
 		}
-		n = n*10 + i
+		n = n*10 + int(c-'0')
 		count++
 	}
 }
@@ -39,32 +36,32 @@ func CompareReader(r1, r2 io.RuneScanner) int {
 			return +1
 		}
 
-		if n1 := strings.IndexRune(table, c1); n1 >= 0 {
-			if n2 := strings.IndexRune(table, c2); n2 >= 0 {
-				var cnt1, cnt2 int
-				n1, cnt1, err1 = readnum(n1, r1)
-				n2, cnt2, err2 = readnum(n2, r2)
-				if n1 < n2 {
-					return -1
-				} else if n1 > n2 {
-					return +1
-				}
-				if cnt1 < cnt2 {
-					return +1
-				} else if cnt1 > cnt2 {
-					return -1
-				}
-				if err1 != nil {
-					if err2 != nil {
-						return 0
-					}
-					return -1
-				}
-				if err2 != nil {
-					return +1
-				}
-				continue
+		if '0' <= c1 && c1 <= '9' && '0' <= c2 && c2 <= '9' {
+			var cnt1, cnt2 int
+			n1 := int(c1 - '0')
+			n2 := int(c2 - '0')
+			n1, cnt1, err1 = readnum(n1, r1)
+			n2, cnt2, err2 = readnum(n2, r2)
+			if n1 < n2 {
+				return -1
+			} else if n1 > n2 {
+				return +1
 			}
+			if cnt1 < cnt2 {
+				return +1
+			} else if cnt1 > cnt2 {
+				return -1
+			}
+			if err1 != nil {
+				if err2 != nil {
+					return 0
+				}
+				return -1
+			}
+			if err2 != nil {
+				return +1
+			}
+			continue
 		}
 		if c1 < c2 {
 			return -1
